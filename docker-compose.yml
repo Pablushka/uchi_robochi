@@ -1,21 +1,14 @@
 version: "3.9"
-   
+
 services:
-
   api_server:
-    image: python:3.9.2
-    # build: .
+    #image: python:3.9.2
+    image: django_tut:latest
+    build: .
 
-    working_dir: /code/api_server
-    
-    # command: bash -c "pip install -r requirements-dev/txt && python manage.py runserver 0.0.0.0:8000"
-    command: bash 
-    #pip install -r requirements-dev.txt 
-    #&& python manage.py runserver 0.0.0.0:3000
-
-    # command: ./start
-    
-    # user: 1000:1000
+    working_dir: /code
+    command: python ./uchi_robochi/manage.py runserver 0.0.0.0:3000
+    #user: 1000:1000
 
     volumes:
       - .:/code
