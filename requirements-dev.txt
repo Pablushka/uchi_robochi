@@ -3,3 +3,4 @@ pytest
 factory-boy
 markdown
 django-filter
+black
