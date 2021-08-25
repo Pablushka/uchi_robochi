@@ -2,19 +2,24 @@ version: "3.9"
 
 services:
   api_server:
-    #image: python:3.9.2
     image: django_tut:latest
     build: .
 
     working_dir: /code
     command: python ./uchi_robochi/manage.py runserver 0.0.0.0:3000
-    #user: 1000:1000
+    # user: "${UID}:${UID}"
 
     volumes:
       - .:/code
       - ./pip_cache:/root/.cache/pip
+      - ./.vscode-ext:/root/.vscode-server/extensions
+      - ./.vscode-insiders-ext:/root/.vscode-server-insiders/extensions      
     ports:
       - "3000:3000"
 
     # depends_on:
     #  - db
+
+# Notas para rocio:
+# docker logs --tail 1000 -f 17dd4f6e6fba
+# docker exec -it 17dd4f6e6fba bash
