@@ -1,3 +1,6 @@
 pip_cache/
 __pycache__
+.vscode-ext/
+.vscode-insiders-ext/
+
 db.sqlite3
