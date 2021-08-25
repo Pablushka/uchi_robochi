@@ -23,6 +23,8 @@
 		"ms-vsliveshare.vsliveshare",
 		"ms-python.python",
 		"alexcvzz.vscode-sqlite",
+		"ms-python.python",
+		"ms-python.vscode-pylance",
 	]
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
