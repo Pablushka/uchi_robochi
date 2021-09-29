@@ -3,7 +3,7 @@
 
 ## Funcionalidades de servicio
 
-1. Administrar usuarios
+1. Administrar usuarios ✔
 2. Asignar raspberrys a los usuarios
 3. Eliminar raspberrys
 4. Crear/Listar/Asocio los dispositivos con un relé (relay)
