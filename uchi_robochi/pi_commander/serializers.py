@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from .models import Relay
 
 
 # Serializers define the API representation.
@@ -26,3 +27,8 @@ class RaspberrySerializer(serializers.HyperlinkedModelSerializer):
                 params={'name': data["name"], 'owner': data["owner"] },
             )
         return data
+
+class RelaySerializer (serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Relay
+        fields = ["id","name","raspberry","label","description"]

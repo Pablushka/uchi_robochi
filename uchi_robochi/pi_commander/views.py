@@ -1,7 +1,9 @@
+from django.db.models import query
 from rest_framework import viewsets
-from .serializers import UserSerializer, RaspberrySerializer
+from .serializers import RelaySerializer, UserSerializer, RaspberrySerializer
 from django.contrib.auth.models import User
 from .models import Raspberry
+from .models import Relay
 
 # ViewSets define the view behavior.
 class UserViewSet(viewsets.ModelViewSet):
@@ -12,3 +14,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class RaspberryViewSet(viewsets.ModelViewSet):
     queryset = Raspberry.objects.all()
     serializer_class = RaspberrySerializer
+
+class RelayViewSet (viewsets.ModelViewSet):
+    queryset = Relay.objects.all()
+    serializer_class = RelaySerializer
