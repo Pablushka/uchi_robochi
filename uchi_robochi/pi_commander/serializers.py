@@ -31,4 +31,4 @@ class RaspberrySerializer(serializers.HyperlinkedModelSerializer):
 class RelaySerializer (serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Relay
-        fields = ["id","name","raspberry","label","description"]
+        fields = ["id", "name", "raspberry", "label", "description"]
