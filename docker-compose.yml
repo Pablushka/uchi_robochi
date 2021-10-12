@@ -6,7 +6,8 @@ services:
     build: .
 
     working_dir: /code
-    command: python ./uchi_robochi/manage.py runserver 0.0.0.0:3000
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    #command: python ./uchi_robochi/manage.py runserver 0.0.0.0:3000
     # user: "${UID}:${UID}"
 
     volumes:
