@@ -7,11 +7,19 @@
 2. Asignar raspberrys a los usuarios ✔
 3. Eliminar raspberrys ✔
 4. Crear/Listar/Asocio los dispositivos con un relé (relay) ✔ 
-   1. Validar que no se repita el nombre del puerto por cada raspberry
+   1. Validar que no se repita el nombre del puerto por cada raspberry ✔
 5. Listar las acciones (Regar, prender luz (Iluminacion), apagar luz, aire acondicionado...)
    1. Prender/apagar un dispositvo electrico
-   2. Regar
-   3. X tarea 
+   
+   actions model
+   |description    | user     | raspeberry| relay     | status
+   |---------------|----------|-----------|-----------|----------|
+   | luz living    | LaBlonda | Raspy1    | luz living| [on|off] |
+   | luz cuarto    | LaBlonda | Raspy1    | luz cuarto| [on|off] |
+
+   2. Validaciones
+      1. No repetir descreiption por user, raspberry, relay 
+
 6. Programar acciones para los dispositivos
 
 8. Alertas (definir disparadores) $$$ 
