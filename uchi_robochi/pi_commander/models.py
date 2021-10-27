@@ -8,7 +8,7 @@ class Raspberry(models.Model):
     owner = models.ForeignKey(User, on_delete = CASCADE)
     
     def __str__(self):
-        return "{0}".format(self.name)
+        return self.name
 
 class Relay(models.Model):
     label = models.CharField(max_length = 40, default = "Relay 1")

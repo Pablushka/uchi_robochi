@@ -10,6 +10,8 @@ services:
     #command: python ./uchi_robochi/manage.py runserver 0.0.0.0:3000
     # user: "${UID}:${UID}"
 
+    environment:
+      - DJANGO_SETTINGS_MODULE=uchi_robochi.settings
     volumes:
       - .:/code
       - ./pip_cache:/root/.cache/pip
