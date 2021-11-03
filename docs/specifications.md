@@ -8,8 +8,8 @@
 3. Eliminar raspberrys ✔
 4. Crear/Listar/Asocio los dispositivos con un relé (relay) ✔ 
    1. Validar que no se repita el nombre del puerto por cada raspberry ✔
-5. Listar las acciones (Regar, prender luz (Iluminacion), apagar luz, aire acondicionado...)
-   1. Prender/apagar un dispositvo electrico
+5. Listar las acciones (Regar, prender luz (Iluminacion), apagar luz, aire acondicionado...) ✔
+   1. Prender/apagar un dispositvo electrico ✔
    
    actions model
    |description    | user     | raspeberry| relay     | status
@@ -18,7 +18,8 @@
    | luz cuarto    | LaBlonda | Raspy1    | luz cuarto| [on|off] |
 
    2. Validaciones
-      1. No repetir descreiption por user, raspberry, relay 
+      1. No repetir description por user, raspberry, relay, action ✔+-
+      2. Agregar runtime a las acciones (@Biki)
 
 6. Programar acciones para los dispositivos
 
