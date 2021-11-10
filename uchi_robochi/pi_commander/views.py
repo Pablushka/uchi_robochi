@@ -1,12 +1,15 @@
 try:
     import RPi.GPIO as GPIO
-except RuntimeError:
+except RuntimeError as e:
     print(
-        "Error importing RPi.GPIO!  This is probably because you need superuser privileges.  You can achieve this by using 'sudo' to run your script"
+        f" {e} Error importing RPi.GPIO!  This is probably because you need superuser privileges.  You can achieve this by using 'sudo' to run your script"
     )
+from django.core import serializers as djs
+from django.db.models.fields import CommaSeparatedIntegerField
+from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.db.models import query
-from rest_framework import viewsets
+from rest_framework import serializers, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
@@ -77,3 +80,63 @@ def set_action_status(request, id):
 
     # Si no la encuentro la accion es inválida
     return Response(data={"respuesta": {"status": action.status}}, status=200)
+
+
+# TODO: Crear una funcion que permita resetear los valores de status por default
+# TODO: Clarita
+
+
+@api_view(["POST"])
+def reset_action_status(request):
+
+    user_id = request.data["user_id"]
+
+    raspberry_id = request.data["raspberry_id"]
+
+    if not type(user_id) is int:
+        return Response(data={"respuesta": "Please enter a User number"}, status=400)
+
+    if not type(raspberry_id) is int:
+        return Response(
+            data={"respuesta": "Please enter a Raspberry number"}, status=400
+        )
+
+    actions = Action.objects.filter(user__exact=user_id, raspberry__exact=raspberry_id)
+    if len(actions) > 0:
+        for action in actions:
+            action.status = False
+            action.save()
+        return Response(
+            data={
+                "respuesta": f"Le cambie a todo, gracias, vuelva prontos, cambié {len(actions)} acciones"
+            },
+            status=200,
+        )
+
+    return Response(data={"respuesta": "No encontre raspberries"}, status=200)
+
+
+@api_view(["GET", "POST"])
+def switch_action(request):
+
+    if request.method == "GET":
+        # el navegador me solicita algo
+        acciones = Action.objects.values(
+            "raspberry", "description", "relay", "user", "status"
+        )
+        data = list(acciones)
+    else:
+        # el navegador me envía algo
+        data = request.data
+        id = data["action_id"]
+
+        action = get_object_or_404(Action, pk=id)
+
+        if "new_status" in data.keys():
+            action.status = data["new_status"]
+        else:
+            action.status = not action.status
+
+        action.save()
+
+    return Response(data={"respuesta": data}, status=200)

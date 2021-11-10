@@ -7,6 +7,8 @@ from .views import (
     RelayViewSet,
     test_GPIO,
     set_action_status,
+    switch_action,
+    reset_action_status,
 )
 
 router = routers.DefaultRouter()
@@ -15,11 +17,12 @@ router.register(r"raspberry", RaspberryViewSet)
 router.register(r"relay", RelayViewSet)
 router.register(r"action", ActionViewSet)
 
-
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path("", include(router.urls)),
     path("gpio/", test_GPIO),
     path("set_action_status/<int:id>", set_action_status),
+    path("switch_action/", switch_action),
+    path("reset_action_status/", reset_action_status),
 ]
