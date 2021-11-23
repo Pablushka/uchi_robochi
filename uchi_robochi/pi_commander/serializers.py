@@ -17,46 +17,68 @@ class RaspberrySerializer(serializers.HyperlinkedModelSerializer):
         model = Raspberry
         fields = ["id", "name", "ip_address", "owner"]
 
-    def validate(self, data):    
+    def validate(self, data):
         """creates rules for avoiding same raspberry name for one owner"""
-        result = Raspberry.objects.filter(name = data["name"], owner = data["owner"])
-        if result :
+        result = Raspberry.objects.filter(name=data["name"], owner=data["owner"])
+        if result:
             raise ValidationError(
-                _('%(name)s is taken for %(owner)s'), 
-                params={'name': data["name"], 'owner': data["owner"] },
+                _("%(name)s is taken for %(owner)s"),
+                params={"name": data["name"], "owner": data["owner"]},
             )
         return data
 
-class RelaySerializer (serializers.HyperlinkedModelSerializer):
+
+class RelaySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Relay
-        fields = ["id", "label", "raspberry", "description"]
+        fields = ["id", "label", "raspberry"]
 
-    def validate(self, data):   
+    def validate(self, data):
         """
         creates rules for avoiding same relay name for one raspberry
         """
-        result = Relay.objects.filter(label = data["label"], raspberry = data["raspberry"])
-        if result :
+        result = Relay.objects.filter(label=data["label"], raspberry=data["raspberry"])
+        if result:
             raise ValidationError(
-                _('%(label)s is taken for %(raspberry)s'), 
-                params={'label': data["label"], 'raspberry': data["raspberry"] },
+                _("%(label)s is taken for %(raspberry)s"),
+                params={"label": data["label"], "raspberry": data["raspberry"]},
             )
         return data
 
-class ActionSerializer (serializers.HyperlinkedModelSerializer):
+
+class ActionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Action
-        fields = ["id", "description", "user", "raspberry", "relay", "status"]
+        fields = [
+            "id",
+            "description",
+            "user",
+            "raspberry",
+            "relay",
+            "time_out",
+            "time_unit",
+            "status",
+        ]
 
     def validate(self, data):
         """
         rule to validate that action description is unique for same user, raspberry and relay
         """
-        result = Action.objects.filter(description = data["description"], user = data["user"], raspberry = data["raspberry"], relay = data["relay"])
-        if result :
+        result = Action.objects.filter(
+            description=data["description"],
+            user=data["user"],
+            raspberry=data["raspberry"],
+            relay=data["relay"],
+        )
+        if result:
             raise ValidationError(
-                _('%(description)s is already in use for this %(relay)s in raspberry %(raspberry)s'),
-                params = {'description': data["description"], 'user': data["user"], 'raspberry': data["raspberry"]},
+                _(
+                    "%(description)s is already in use for this %(relay)s in raspberry %(raspberry)s"
+                ),
+                params={
+                    "description": data["description"],
+                    "user": data["user"],
+                    "raspberry": data["raspberry"],
+                },
             )
         return data
