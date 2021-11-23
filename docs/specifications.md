@@ -18,13 +18,17 @@
    | luz cuarto    | LaBlonda | Raspy1    | luz cuarto| [on|off] |
 
    2. Validaciones
-      1. No repetir description por user, raspberry, relay, action ✔+-
-      2. Agregar runtime a las acciones (@Biki)
+      1. No repetir description por user, raspberry, relay, action ✔
+      2. Agregar timeout a las acciones (@Biki)
+      3. Agregar schedule triggers para ejecutar una accion (@TheClarinet)
+
+   3. Worker: Agendar y controlar el tiempo de encendido/apagado de las acciones (@Rocío)
 
 6. Programar acciones para los dispositivos
 
 8. Alertas (definir disparadores) $$$ 
 9.  Parental suicidal control
+10. Redirigir la home a /pi_commander respetando el path de la app
 
 ## Funcionalidades empresarial/proyecto/de negocio
 
