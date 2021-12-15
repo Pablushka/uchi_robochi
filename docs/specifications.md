@@ -19,10 +19,12 @@
 
    2. Validaciones
       1. No repetir description por user, raspberry, relay, action ✔
-      2. Agregar timeout a las acciones (@Biki)
-      3. Agregar schedule triggers para ejecutar una accion (@TheClarinet)
+      2. Agregar timeout a las acciones ✔
+      3. Agregar schedule triggers para ejecutar una accion (@TheClarinet) respetando los timeouts
 
-   3. Worker: Agendar y controlar el tiempo de encendido/apagado de las acciones (@Rocío)
+   3. Tests by @Rochimo
+
+   4. TaskWorker: Agendar y controlar el tiempo de encendido/apagado de las acciones (@Rocío)
 
 6. Programar acciones para los dispositivos
 

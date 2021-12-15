@@ -1,4 +1,4 @@
-FROM python:3.9.2
+FROM python:3.10.1
 ENV PYTHONUNBUFFERED=1
 RUN apt-get update
 RUN apt install sqlite3

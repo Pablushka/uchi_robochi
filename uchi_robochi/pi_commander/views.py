@@ -1,9 +1,9 @@
-try:
-    import RPi.GPIO as GPIO
-except RuntimeError as e:
-    print(
-        f" {e} Error importing RPi.GPIO!  This is probably because you need superuser privileges.  You can achieve this by using 'sudo' to run your script"
-    )
+# try:
+#     import RPi.GPIO as GPIO
+# except RuntimeError as e:
+#     print(
+#         f" {e} Error importing RPi.GPIO!  This is probably because you need superuser privileges.  You can achieve this by using 'sudo' to run your script"
+#     )
 from django.core import serializers as djs
 from django.db.models.fields import CommaSeparatedIntegerField
 from django.http.response import JsonResponse
@@ -22,7 +22,7 @@ from .serializers import (
 from django.contrib.auth.models import User
 from .models import Raspberry
 from .models import Relay, Action
-
+import time
 
 # ViewSets define the view behavior.
 class UserViewSet(viewsets.ModelViewSet):
@@ -88,7 +88,9 @@ def set_action_status(request, id):
 
 @api_view(["POST"])
 def reset_action_status(request):
-
+    """
+    Apaga todas las acciones de una raspberry
+    """
     user_id = request.data["user_id"]
 
     raspberry_id = request.data["raspberry_id"]
@@ -119,10 +121,14 @@ def reset_action_status(request):
 @api_view(["GET", "POST"])
 def switch_action(request):
 
+    """
+    Cambia el estado una action
+    """
+
     if request.method == "GET":
         # el navegador me solicita algo
         acciones = Action.objects.values(
-            "raspberry", "description", "relay", "user", "status"
+            "id", "raspberry", "description", "relay", "user", "status"
         )
         data = list(acciones)
     else:
@@ -132,11 +138,36 @@ def switch_action(request):
 
         action = get_object_or_404(Action, pk=id)
 
+        previous_status = action.status
+
+        # Si en el json envio un new_status cambia el estado por ese new_status
+        # de lo contario invierte el estado actual de la acción
         if "new_status" in data.keys():
             action.status = data["new_status"]
         else:
             action.status = not action.status
 
         action.save()
+
+        # Esto lo tiene que hacer el TaskWorker
+        # chequeo si hay timeout
+        # if action.time_out != None:
+
+        #     match action.time_unit:
+        #         case 'D':
+        #             segundos = (60 * 60 * 24) * action.time_out
+        #         case 'H':
+        #             segundos = (60 * 60 ) * action.time_out
+        #         case 'M':
+        #             segundos = 60 * action.time_out
+        #         case 'S':
+        #             segundos = action.time_out
+
+        #     #si hay timeout tengo que esperar x tiempo
+        #     time.sleep(segundos)
+
+        #     #volver al estado original
+        #     action.status = previous_status
+        #     action.save()
 
     return Response(data={"respuesta": data}, status=200)

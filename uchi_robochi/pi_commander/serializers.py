@@ -57,28 +57,30 @@ class ActionSerializer(serializers.HyperlinkedModelSerializer):
             "relay",
             "time_out",
             "time_unit",
+            "start_time",
+            "end_time",
             "status",
         ]
 
-    def validate(self, data):
-        """
-        rule to validate that action description is unique for same user, raspberry and relay
-        """
-        result = Action.objects.filter(
-            description=data["description"],
-            user=data["user"],
-            raspberry=data["raspberry"],
-            relay=data["relay"],
-        )
-        if result:
-            raise ValidationError(
-                _(
-                    "%(description)s is already in use for this %(relay)s in raspberry %(raspberry)s"
-                ),
-                params={
-                    "description": data["description"],
-                    "user": data["user"],
-                    "raspberry": data["raspberry"],
-                },
-            )
-        return data
+    # def validate(self, data):
+    #     """
+    #     rule to validate that action description is unique for same user, raspberry and relay
+    #     """
+    #     result = Action.objects.filter(
+    #         description=data["description"],
+    #         user=data["user"],
+    #         raspberry=data["raspberry"],
+    #         relay=data["relay"],
+    #     )
+    #     if result:
+    #         raise ValidationError(
+    #             _(
+    #                 "%(description)s is already in use for this %(relay)s in raspberry %(raspberry)s"
+    #             ),
+    #             params={
+    #                 "description": data["description"],
+    #                 "user": data["user"],
+    #                 "raspberry": data["raspberry"],
+    #             },
+    #         )
+    #     return data

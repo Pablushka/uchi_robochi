@@ -30,3 +30,5 @@ class Action(models.Model):
     status = models.BooleanField(default=False)
     time_out = models.IntegerField(blank=True, null=True)
     time_unit = models.CharField(max_length=1, choices=TIME_UNIT_OPTIONS, default="M")
+    start_time = models.DateTimeField(default=None, blank=True, null=True)
+    end_time = models.DateTimeField(default=None, blank=True, null=True)
