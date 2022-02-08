@@ -4,7 +4,6 @@ from rest_framework import serializers
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -62,25 +61,48 @@ class ActionSerializer(serializers.HyperlinkedModelSerializer):
             "status",
         ]
 
-    # def validate(self, data):
-    #     """
-    #     rule to validate that action description is unique for same user, raspberry and relay
-    #     """
-    #     result = Action.objects.filter(
-    #         description=data["description"],
-    #         user=data["user"],
-    #         raspberry=data["raspberry"],
-    #         relay=data["relay"],
-    #     )
-    #     if result:
-    #         raise ValidationError(
-    #             _(
-    #                 "%(description)s is already in use for this %(relay)s in raspberry %(raspberry)s"
-    #             ),
-    #             params={
-    #                 "description": data["description"],
-    #                 "user": data["user"],
-    #                 "raspberry": data["raspberry"],
-    #             },
-    #         )
-    #     return data
+    def validate(self, data):
+        """
+        rule to validate that action description is unique for same user, raspberry and relay
+        """
+
+        is_creating = self.instance == None
+
+        current_action = Action.objects.filter(
+            description=data["description"],
+            user=data["user"],
+            raspberry=data["raspberry"],
+            relay=data["relay"],
+            id=self.instance.id,
+        )
+
+        current_action_key = (
+            current_action[0].description,
+            current_action[0].user,
+            current_action[0].raspberry,
+            current_action[0].relay,
+        )
+
+        new_data_key = (
+            data["description"],
+            data["user"],
+            data["raspberry"],
+            data["relay"],
+        )
+
+        if current_action_key != new_data_key:
+            raise ValidationError(
+                {
+                    "Action Uniqness": _(
+                        f"{data['description']} is already in use for this {data['relay']} in raspberry {data['raspberry']}"
+                    )
+                },
+                params={
+                    "description": data["description"],
+                    "user": data["user"],
+                    "raspberry": data["raspberry"],
+                    "relay": data["relay"],
+                },
+            )
+
+        return data

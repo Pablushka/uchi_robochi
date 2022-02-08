@@ -20,7 +20,7 @@
    2. Validaciones
       1. No repetir description por user, raspberry, relay, action ✔
       2. Agregar timeout a las acciones ✔
-      3. Agregar schedule triggers para ejecutar una accion (@TheClarinet) respetando los timeouts
+      3. Agregar schedule triggers para ejecutar una accion (@TheClarinet) respetando los timeouts ✔
 
    3. Tests by @Rochimo
 
