@@ -12,6 +12,6 @@ def test_create_raspberry():
 
 @pytest.mark.django_db(transaction=True)
 def test_check_raspy_name():
-    factories.RaspberryFactory()
+    factories.RaspberryFactory(name='Pepe')
 
     assert models.Raspberry.objects.first().name == "Pepe"
